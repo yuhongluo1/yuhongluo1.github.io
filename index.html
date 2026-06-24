@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yuhong Luo | 罗雨虹</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+      background: #0d0d0d;
+      color: #e0e0e0;
+      line-height: 1.7;
+    }
+    a { color: #6c8cff; text-decoration: none; transition: color .2s; }
+    a:hover { color: #8aa8ff; }
+    img { max-width: 100%; }
+    ::selection { background: #6c8cff44; }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      background: rgba(13,13,13,.75);
+      border-bottom: 1px solid #222;
+      padding: 0 2rem;
+    }
+    nav ul {
+      max-width: 900px; margin: 0 auto;
+      display: flex; gap: 2rem;
+      list-style: none; height: 56px; align-items: center;
+      justify-content: center;
+    }
+    nav a {
+      font-size: .9rem; color: #999; font-weight: 500;
+      letter-spacing: .3px;
+    }
+    nav a:hover { color: #fff; }
+
+    /* ─── Sections ─── */
+    section {
+      max-width: 800px; margin: 0 auto; padding: 5rem 2rem;
+    }
+    section:first-of-type { padding-top: 7rem; }
+
+    /* ─── Hero ─── */
+    .hero {
+      text-align: center;
+      min-height: 80vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    .avatar {
+      width: 130px; height: 130px; border-radius: 50%;
+      background: linear-gradient(135deg, #6c8cff, #a78bfa);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: #fff; font-weight: 700;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 40px rgba(108,140,255,.25);
+    }
+    .hero h1 {
+      font-size: 2.8rem; font-weight: 700;
+      background: linear-gradient(135deg, #e0e0e0 0%, #6c8cff 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero .subtitle {
+      font-size: 1.15rem; color: #888; margin-top: .6rem;
+    }
+    .hero .tagline {
+      font-size: 1rem; color: #666; margin-top: 1rem; max-width: 500px;
+    }
+
+    /* ─── Section Headers ─── */
+    .section-title {
+      font-size: 1.6rem; font-weight: 700; margin-bottom: .5rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .section-title .icon { font-size: 1.3rem; }
+    .section-desc { color: #666; margin-bottom: 2.5rem; font-size: .95rem; }
+
+    /* ─── About ─── */
+    .about-text { color: #bbb; font-size: 1.05rem; }
+    .about-text p + p { margin-top: 1.2rem; }
+
+    /* ─── Projects Grid ─── */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.2rem;
+    }
+    .project-card {
+      background: #141414; border: 1px solid #222; border-radius: 12px;
+      padding: 1.5rem; transition: border-color .2s, transform .2s;
+    }
+    .project-card:hover { border-color: #6c8cff44; transform: translateY(-2px); }
+    .project-card h3 { font-size: 1.1rem; margin-bottom: .5rem; }
+    .project-card p { font-size: .9rem; color: #888; }
+    .project-card .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+    .project-card .tag {
+      font-size: .75rem; padding: 2px 10px; border-radius: 20px;
+      background: #6c8cff18; color: #6c8cff; border: 1px solid #6c8cff22;
+    }
+    .project-card.empty {
+      border: 1px dashed #333; color: #555;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 120px; font-style: italic;
+    }
+
+    /* ─── Skills ─── */
+    .skills-list { display: flex; flex-direction: column; gap: 1rem; }
+    .skill-item { display: flex; flex-direction: column; gap: .35rem; }
+    .skill-item .skill-header {
+      display: flex; justify-content: space-between; font-size: .9rem; color: #ccc;
+    }
+    .skill-bar {
+      height: 6px; background: #222; border-radius: 3px; overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, #6c8cff, #a78bfa);
+      width: 0%; transition: width 1s ease;
+    }
+
+    /* ─── Blog ─── */
+    .blog-list { display: flex; flex-direction: column; gap: 1rem; }
+    .blog-post {
+      background: #141414; border: 1px solid #222; border-radius: 10px;
+      padding: 1.2rem 1.5rem; transition: border-color .2s;
+    }
+    .blog-post:hover { border-color: #6c8cff44; }
+    .blog-post .date { font-size: .8rem; color: #555; }
+    .blog-post h3 { font-size: 1rem; margin: .2rem 0 .3rem; }
+    .blog-post p { font-size: .88rem; color: #777; }
+    .blog-post.empty {
+      border: 1px dashed #333; color: #555; text-align: center; padding: 2rem;
+    }
+
+    /* ─── Contact ─── */
+    .contact-links {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: .5rem;
+    }
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .7rem 1.5rem; border-radius: 10px;
+      background: #141414; border: 1px solid #222; color: #ccc;
+      font-size: .9rem; transition: all .2s;
+    }
+    .contact-btn:hover {
+      border-color: #6c8cff; color: #fff; background: #1a1a2e;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      text-align: center; padding: 2rem; color: #444; font-size: .85rem;
+      border-top: 1px solid #181818;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      nav ul { gap: 1.2rem; }
+      nav a { font-size: .8rem; }
+      section { padding: 3rem 1.2rem; }
+      section:first-of-type { padding-top: 5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Navigation ─── -->
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ─── Hero ─── -->
+<section class="hero" id="top">
+  <div class="avatar">YL</div>
+  <h1>Yuhong Luo</h1>
+  <p class="subtitle">罗雨虹 · Student · Builder</p>
+  <p class="tagline">Beijing Kaiwen Academy · G11→G12 · Exploring sociology, psychology &amp; tech</p>
+  <div style="margin-top:2rem;display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;">
+    <a href="#projects" style="padding:.6rem 1.8rem;border-radius:8px;background:#6c8cff;color:#fff;font-weight:600;font-size:.9rem;">View Projects</a>
+    <a href="#contact" style="padding:.6rem 1.8rem;border-radius:8px;border:1px solid #333;color:#aaa;font-size:.9rem;">Get in Touch</a>
+  </div>
+</section>
+
+<!-- ─── About ─── -->
+<section id="about">
+  <h2 class="section-title"><span class="icon">👤</span> About Me</h2>
+  <p class="section-desc">A quick introduction</p>
+  <div class="about-text">
+    <p>
+      I'm Yuhong Luo, a G11→G12 student at Beijing Kaiwen Academy. I'm passionate about 
+      <strong>sociology, psychology, and gender studies</strong> — understanding how people 
+      interact, think, and build the societies we live in.
+    </p>
+    <p>
+      SAT 1500 · TOEFL 110 · APs in Physics 1, Calculus BC &amp; Psychology (all 5s). 
+      Outside the classroom, I'm building projects, writing, and exploring how technology 
+      can serve the social sciences.
+    </p>
+    <p>
+      This site is my home on the internet — a place to showcase what I build, what I write, 
+      and what I'm curious about. Still growing, always learning.
+    </p>
+  </div>
+</section>
+
+<!-- ─── Projects ─── -->
+<section id="projects">
+  <h2 class="section-title"><span class="icon">🚀</span> Projects</h2>
+  <p class="section-desc">Things I've built — more coming soon</p>
+  <div class="projects-grid">
+    <div class="project-card empty">
+      ✨ Your first project goes here
+    </div>
+    <div class="project-card empty">
+      ✨ Drop in your GitHub repos
+    </div>
+    <div class="project-card empty">
+      ✨ Or any cool thing you've made
+    </div>
+  </div>
+</section>
+
+<!-- ─── Skills ─── -->
+<section id="skills">
+  <h2 class="section-title"><span class="icon">⚡</span> Skills</h2>
+  <p class="section-desc">Stuff I know — still adding more</p>
+  <div class="skills-list">
+    <div class="skill-item">
+      <div class="skill-header"><span>English (TOEFL 110)</span><span>90%</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header"><span>Chinese (Native)</span><span>100%</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:100%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header"><span>Python</span><span>50%</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:50%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header"><span>Academic Writing &amp; Research</span><span>75%</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-header"><span>Data Analysis</span><span>40%</span></div>
+      <div class="skill-bar"><div class="skill-bar-fill" style="width:40%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Blog / Writing ─── -->
+<section id="blog">
+  <h2 class="section-title"><span class="icon">📝</span> Blog &amp; Writing</h2>
+  <p class="section-desc">Thoughts, notes, and things I'm working on</p>
+  <div class="blog-list">
+    <div class="blog-post empty">
+      🖊️ Your first post will appear here — could be a reflection, a project diary, or something you just want to share.
+    </div>
+  </div>
+</section>
+
+<!-- ─── Contact ─── -->
+<section id="contact">
+  <h2 class="section-title"><span class="icon">📬</span> Get in Touch</h2>
+  <p class="section-desc">Find me around the web</p>
+  <div class="contact-links">
+    <a class="contact-btn" href="https://github.com/yuhongluo1" target="_blank" rel="noopener">
+      <span>🐙</span> GitHub
+    </a>
+    <a class="contact-btn" href="mailto:yuhongluo1@users.noreply.github.com">
+      <span>✉️</span> Email
+    </a>
+    <a class="contact-btn" href="#" onclick="alert('Coming soon!');return false;">
+      <span>📄</span> Resume
+    </a>
+    <a class="contact-btn" href="#" onclick="alert('Coming soon!');return false;">
+      <span>🔗</span> LinkedIn
+    </a>
+  </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer>
+  &copy; 2026 Yuhong Luo · Built with Hermes Agent · Hosted on GitHub Pages
+</footer>
+
+</body>
+</html>
