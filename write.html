@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Write — Yuhong Luo</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+    background: #0d0d0d;
+    color: #e0e0e0;
+    line-height: 1.7;
+    padding: 3rem 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.6rem; margin-bottom: .3rem; }
+  .subtitle { color: #666; font-size: .9rem; margin-bottom: 2rem; }
+  label { display: block; color: #999; font-size: .85rem; margin-bottom: .3rem; margin-top: 1.2rem; }
+  input, select, textarea {
+    width: 100%;
+    background: #141414;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #e0e0e0;
+    padding: .8rem 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  textarea { min-height: 250px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: #6c8cff; }
+  .btn {
+    display: inline-block;
+    padding: .8rem 2rem;
+    background: #6c8cff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.2rem;
+    transition: background .2s;
+  }
+  .btn:hover { background: #5a7ae8; }
+  .btn-secondary {
+    background: #222;
+    color: #ccc;
+    margin-left: .5rem;
+  }
+  .btn-secondary:hover { background: #333; }
+  .status { margin-top: 1rem; padding: .8rem; border-radius: 8px; display: none; }
+  .status.success { display:block; background: #1a3a1a; border: 1px solid #2a5a2a; color: #8f8; }
+  .status.info { display:block; background: #1a1a3a; border: 1px solid #2a2a5a; color: #88f; }
+  .step { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; }
+  .step h3 { color: #6c8cff; font-size: 1rem; margin-bottom: .5rem; }
+  .step p { color: #888; font-size: .88rem; }
+  .step code { background: #1a1a1a; color: #aaa; padding: .15rem .4rem; border-radius: 4px; font-size: .8rem; }
+  hr { border: none; border-top: 1px solid #222; margin: 2rem 0; }
+</style>
+</head>
+<body>
+
+<h1>✏️ Write to your site</h1>
+<p class="subtitle">Write something and it'll appear on yuhongluo1.github.io</p>
+
+<div class="step">
+  <h3>📋 How this works</h3>
+  <p>1. You write here → 2. It opens a pre-filled Notion page → 3. A robot checks Notion every 30 minutes → 4. Your writing appears on the site</p>
+</div>
+
+<label for="title">Title</label>
+<input type="text" id="title" placeholder="e.g. A thought about ...">
+
+<label for="section">Section</label>
+<select id="section">
+  <option value="Writing">Writing — essays, schoolwork, thoughts</option>
+  <option value="Personal">Personal — more private, for yourself</option>
+</select>
+
+<label for="content">Write something...</label>
+<textarea id="content" placeholder="Start writing..."></textarea>
+
+<div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+  <button class="btn" onclick="openNotion()">📝 Open in Notion</button>
+  <button class="btn btn-secondary" onclick="copyFormat()">📋 Copy formatted</button>
+</div>
+
+<div id="status" class="status"></div>
+
+<hr>
+
+<div style="text-align:center;color:#444;font-size:.85rem;">
+  <a href="https://yuhongluo1.github.io" style="color:#555;">← Back to site</a>
+</div>
+
+<script>
+function getDate() {
+  const d = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function openNotion() {
+  const title = document.getElementById('title').value || 'Untitled';
+  const content = document.getElementById('content').value || '';
+  const section = document.getElementById('section').value;
+  const date = getDate();
+
+  // Build Notion URL with pre-filled content
+  const notionUrl = 'https://www.notion.so/new?' + new URLSearchParams({
+    text: `# ${title}\n\nSection: ${section}\nDate: ${date}\n\n${content}`
+  });
+
+  const status = document.getElementById('status');
+  status.className = 'status info';
+  status.innerHTML = '✅ Opening Notion... Paste the content there. The robot will pick it up within 30 minutes!';
+  
+  window.open(notionUrl, '_blank');
+}
+
+function copyFormat() {
+  const title = document.getElementById('title').value || 'Untitled';
+  const content = document.getElementById('content').value || '';
+  const section = document.getElementById('section').value;
+  const date = getDate();
+
+  const formatted = `# ${title}\n\nSection: ${section}\nDate: ${date}\n\n${content}`;
+  
+  navigator.clipboard.writeText(formatted).then(() => {
+    const status = document.getElementById('status');
+    status.className = 'status success';
+    status.innerHTML = '✅ Copied! Paste it into your Notion database.';
+  }).catch(() => {
+    const status = document.getElementById('status');
+    status.className = 'status info';
+    status.innerHTML = 'Copy this:<br><textarea readonly>' + formatted + '</textarea>';
+  });
+}
+</script>
+
+</body>
+</html>
