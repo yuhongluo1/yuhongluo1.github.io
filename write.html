@@ -44,49 +44,33 @@
     transition: background .2s;
   }
   .btn:hover { background: #5a7ae8; }
-  .btn-secondary {
-    background: #222;
-    color: #ccc;
-    margin-left: .5rem;
-  }
-  .btn-secondary:hover { background: #333; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
   .status { margin-top: 1rem; padding: .8rem; border-radius: 8px; display: none; }
   .status.success { display:block; background: #1a3a1a; border: 1px solid #2a5a2a; color: #8f8; }
-  .status.info { display:block; background: #1a1a3a; border: 1px solid #2a2a5a; color: #88f; }
-  .step { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; }
-  .step h3 { color: #6c8cff; font-size: 1rem; margin-bottom: .5rem; }
-  .step p { color: #888; font-size: .88rem; }
-  .step code { background: #1a1a1a; color: #aaa; padding: .15rem .4rem; border-radius: 4px; font-size: .8rem; }
+  .status.error { display:block; background: #3a1a1a; border: 1px solid #5a2a2a; color: #f88; }
+  .status.loading { display:block; background: #1a1a3a; border: 1px solid #2a2a5a; color: #88f; }
+  .hint { color: #555; font-size: .8rem; margin-top: .3rem; }
   hr { border: none; border-top: 1px solid #222; margin: 2rem 0; }
 </style>
 </head>
 <body>
 
-<h1>✏️ Write to your site</h1>
-<p class="subtitle">Write something and it'll appear on yuhongluo1.github.io</p>
-
-<div class="step">
-  <h3>📋 How this works</h3>
-  <p>1. You write here → 2. It opens a pre-filled Notion page → 3. A robot checks Notion every 30 minutes → 4. Your writing appears on the site</p>
-</div>
+<h1>✏️ Write</h1>
+<p class="subtitle">Write something and it'll appear on your site in a few minutes.</p>
 
 <label for="title">Title</label>
-<input type="text" id="title" placeholder="e.g. A thought about ...">
+<input type="text" id="title" placeholder="e.g. A random thought">
 
 <label for="section">Section</label>
 <select id="section">
-  <option value="Writing">Writing — essays, schoolwork, thoughts</option>
-  <option value="Personal">Personal — more private, for yourself</option>
+  <option value="writing">Writing — essays, thoughts, notes</option>
+  <option value="personal">Personal — for yourself</option>
 </select>
 
 <label for="content">Write something...</label>
-<textarea id="content" placeholder="Start writing..."></textarea>
+<textarea id="content" placeholder="Start typing..."></textarea>
 
-<div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-  <button class="btn" onclick="openNotion()">📝 Open in Notion</button>
-  <button class="btn btn-secondary" onclick="copyFormat()">📋 Copy formatted</button>
-</div>
-
+<button class="btn" id="submitBtn" onclick="submit()">📝 Publish</button>
 <div id="status" class="status"></div>
 
 <hr>
@@ -96,49 +80,158 @@
 </div>
 
 <script>
-function getDate() {
-  const d = new Date();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return months[d.getMonth()] + ' ' + d.getFullYear();
+// GitHub username and repo
+const GITHUB_USER = 'yuhongluo1';
+const GITHUB_REPO = 'yuhongluo1.github.io';
+const BRANCH = 'main';
+
+async function getToken() {
+  let token = localStorage.getItem('gh_token');
+  if (!token) {
+    token = prompt('Enter your GitHub token (one time only, saved locally):');
+    if (token) {
+      localStorage.setItem('gh_token', token);
+    }
+  }
+  return token;
 }
 
-function openNotion() {
-  const title = document.getElementById('title').value || 'Untitled';
-  const content = document.getElementById('content').value || '';
+async function submit() {
+  const title = document.getElementById('title').value.trim();
+  const content = document.getElementById('content').value.trim();
   const section = document.getElementById('section').value;
-  const date = getDate();
-
-  // Build Notion URL with pre-filled content
-  const notionUrl = 'https://www.notion.so/new?' + new URLSearchParams({
-    text: `# ${title}\n\nSection: ${section}\nDate: ${date}\n\n${content}`
-  });
-
+  const btn = document.getElementById('submitBtn');
   const status = document.getElementById('status');
-  status.className = 'status info';
-  status.innerHTML = '✅ Opening Notion... Paste the content there. The robot will pick it up within 30 minutes!';
-  
-  window.open(notionUrl, '_blank');
-}
 
-function copyFormat() {
-  const title = document.getElementById('title').value || 'Untitled';
-  const content = document.getElementById('content').value || '';
-  const section = document.getElementById('section').value;
-  const date = getDate();
+  if (!title || !content) {
+    status.className = 'status error';
+    status.textContent = '❌ Please enter both a title and content.';
+    return;
+  }
 
-  const formatted = `# ${title}\n\nSection: ${section}\nDate: ${date}\n\n${content}`;
+  const token = await getToken();
+  if (!token) {
+    status.className = 'status error';
+    status.textContent = '❌ No token provided.';
+    return;
+  }
+
+  btn.disabled = true;
+  status.className = 'status loading';
+  status.textContent = '⏳ Publishing...';
+
+  const date = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dateStr = months[date.getMonth()] + ' ' + date.getFullYear();
+
+  // Build the post HTML
+  const postHtml = `
+    <div class="blog-post">
+      <span class="date">${dateStr}</span>
+      <details>
+        <summary style="cursor:pointer;list-style:none;">
+          <h3 style="display:inline;">${escapeHtml(title)}</h3>
+        </summary>
+        <div class="content">
+          <p>${escapeHtml(content).replace(/\n/g, '</p><p>')}</p>
+        </div>
+      </details>
+    </div>`;
+
+  // Get current file
+  const fileUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/index.html`;
   
-  navigator.clipboard.writeText(formatted).then(() => {
-    const status = document.getElementById('status');
+  try {
+    // Get current file content and SHA
+    const getResp = await fetch(fileUrl, {
+      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    
+    if (!getResp.ok) {
+      throw new Error('Failed to fetch current page: ' + getResp.status);
+    }
+    
+    const fileData = await getResp.json();
+    const sha = fileData.sha;
+    let currentContent = atob(fileData.content);
+
+    // Find the right section and insert the post
+    let insertPoint;
+    if (section === 'personal') {
+      insertPoint = currentContent.lastIndexOf('</section>');
+      // Insert before the last </section> (which is the Contact section)
+      // Actually, find the personal section or writing section
+      const sectionId = `id="${section}"`;
+      const sectionStart = currentContent.indexOf(sectionId);
+      if (sectionStart > -1) {
+        const blogListEnd = currentContent.indexOf('</div>', currentContent.indexOf('blog-list', sectionStart));
+        const nextSection = currentContent.indexOf('</section>', sectionStart);
+        if (nextSection > 0) {
+          currentContent = currentContent.slice(0, nextSection) + '\n' + postHtml + '\n  ' + currentContent.slice(nextSection);
+        }
+      }
+    } else {
+      // writing section - find it and insert before the closing </section>
+      const sectionStart = currentContent.indexOf('id="writing"');
+      if (sectionStart > -1) {
+        const nextSection = currentContent.indexOf('</section>', sectionStart);
+        if (nextSection > 0) {
+          currentContent = currentContent.slice(0, nextSection) + '\n' + postHtml + '\n  ' + currentContent.slice(nextSection);
+        }
+      }
+    }
+
+    // Commit
+    const commitResp = await fetch(fileUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify({
+        message: `✏️ New post: ${title}`,
+        content: btoa(unescape(encodeURIComponent(currentContent))),
+        sha: sha,
+        branch: BRANCH
+      })
+    });
+
+    if (!commitResp.ok) {
+      const err = await commitResp.json();
+      throw new Error(err.message || 'Failed to publish');
+    }
+
     status.className = 'status success';
-    status.innerHTML = '✅ Copied! Paste it into your Notion database.';
-  }).catch(() => {
-    const status = document.getElementById('status');
-    status.className = 'status info';
-    status.innerHTML = 'Copy this:<br><textarea readonly>' + formatted + '</textarea>';
-  });
-}
-</script>
+    status.innerHTML = `✅ Published! <a href="https://yuhongluo1.github.io" style="color:#6c8cff;">View site →</a> (may take 1-2 min to update)`;
+    
+    // Clear form
+    document.getElementById('title').value = '';
+    document.getElementById('content').value = '';
 
+  } catch (err) {
+    status.className = 'status error';
+    status.textContent = '❌ ' + err.message;
+  }
+
+  btn.disabled = false;
+}
+
+function escapeHtml(text) {
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+  return text.replace(/[&<>"']/g, c => map[c]);
+}
+
+// Clear stored token (for security)
+document.getElementById('clearToken') || document.body.appendChild(
+  Object.assign(document.createElement('button'), {
+    className: 'btn btn-secondary',
+    id: 'clearToken',
+    style: 'background:#222;color:#888;margin-top:.5rem;cursor:pointer;border:none;padding:.5rem 1rem;border-radius:8px;font-size:.8rem;',
+    textContent: '🔑 Clear saved token',
+    onclick: () => { localStorage.removeItem('gh_token'); alert('Token cleared!'); }
+  })
+);
+</script>
 </body>
 </html>
