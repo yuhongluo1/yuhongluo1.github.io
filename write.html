@@ -447,33 +447,39 @@ async function publishReadingNote() {
     let current = decodeUTF8(fileData.content);
 
     // Find the book in the Reading section by looking for its name in a summary
-    // Look for the book name inside a <summary> tag within the reading section
     const readingSection = current.indexOf('id="reading"');
     if (readingSection === -1) throw new Error('Reading section not found');
 
-    // Find the specific book's details element
-    // Search for: <strong>Book Name</strong> <span style="color:#555;">— Author</span>
-    const bookSearch = `<strong>${escHtml(book.split(' — ')[0] || book)}</strong>`;
+    // Search for book name in the notes area - look for <strong>BookName</strong>
+    const bookName = book.split(' — ')[0].trim();
+    const bookSearch = `<strong>${escHtml(bookName)}</strong>`;
     const bookIdx = current.indexOf(bookSearch, readingSection);
     
     if (bookIdx > -1) {
-      // Found the book - find its content div and insert before the "No notes yet" or after existing notes
-      const contentDiv = current.indexOf('<div class="content"', bookIdx);
-      const contentInner = current.indexOf('<div class="content"', contentDiv + 10);
-      const contentEnd = current.indexOf('</div>', current.indexOf('</div>', current.indexOf('</details>', contentDiv) - 20) + 6);
-      
-      if (contentInner > -1) {
-        // Find "No notes yet" and replace it with the note
-        const noNotes = current.indexOf('No notes yet', contentInner);
-        if (noNotes > -1 && noNotes < contentInner + 200) {
-          const pStart = current.lastIndexOf('<p', noNotes);
-          const pEnd = current.indexOf('</p>', noNotes) + 4;
-          current = current.slice(0, pStart) + noteHtml + current.slice(pEnd);
-        } else {
-          // Insert after existing notes
-          const closeDiv = current.indexOf('</div>', current.indexOf('</div>', contentInner) + 6);
-          current = current.slice(0, closeDiv) + noteHtml + current.slice(closeDiv);
+      // Found the book - find this book's specific details element
+      // Find the next </summary> after the book name, then the <div class="content"
+      const summaryEnd = current.indexOf('</summary>', bookIdx);
+      if (summaryEnd > -1) {
+        const contentDiv = current.indexOf('<div class="content"', summaryEnd);
+        if (contentDiv > -1) {
+          // Find the first child element or "No notes yet" inside this content div
+          const contentEnd = current.indexOf('</div>', current.indexOf('<div class="content"', contentDiv + 20));
+          const closeDiv = current.indexOf('</div>', contentEnd + 6);
+          
+          // Check if there's "No notes yet"
+          const noNotes = current.indexOf('No notes yet', contentDiv);
+          if (noNotes > -1 && noNotes < closeDiv) {
+            // Replace the <p> containing "No notes yet" with the note
+            const pStart = current.lastIndexOf('<p', noNotes);
+            const pEnd = current.indexOf('</p>', noNotes) + 4;
+            current = current.slice(0, pStart) + noteHtml + current.slice(pEnd);
+          } else {
+            // Insert before the closing </div> of the content
+            const insertPoint = current.lastIndexOf('</div>', closeDiv - 5);
+            current = current.slice(0, insertPoint) + noteHtml + current.slice(insertPoint);
+          }
         }
+      }
       }
     } else {
       // Book not found in the reading list - add as a reading note post instead
