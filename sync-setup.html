@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>WeChat Read Setup</title>
+<style>
+  body{background:#0d0d0d;color:#e0e0e0;font-family:-apple-system,sans-serif;padding:2rem;max-width:700px;margin:0 auto;line-height:1.7}
+  h1{font-size:1.5rem}
+  .step{background:#141414;border:1px solid #222;border-radius:8px;padding:1rem;margin-bottom:.8rem}
+  .step h3{color:#6c8cff;font-size:.95rem;margin-bottom:.3rem}
+  .step p{color:#888;font-size:.88rem}
+  .step code{background:#1a1a1a;color:#aaa;padding:.1rem .3rem;border-radius:3px;font-size:.82rem}
+  img{max-width:100%;border-radius:6px;margin-top:.5rem;border:1px solid #333}
+</style>
+</head>
+<body>
+
+<h1>📖 微信读书同步设置</h1>
+<p style="color:#666;">跟着这几步做，只要做一次。</p>
+
+<div class="step">
+  <h3>1️⃣ 打开微信读书网页版</h3>
+  <p>打开 <a href="https://weread.qq.com/" style="color:#6c8cff;" target="_blank">weread.qq.com</a> → 点击"登录" → 用微信扫码登录</p>
+</div>
+
+<div class="step">
+  <h3>2️⃣ 打开开发者工具</h3>
+  <p>按 <code>F12</code> 或 <code>Cmd+Option+I</code></p>
+  <p>顶部点 <strong>Network（网络）</strong></p>
+  <p>然后刷新页面 <code>Cmd+R</code></p>
+</div>
+
+<div class="step">
+  <h3>3️⃣ 找到 Cookie</h3>
+  <p>在 Network 列表里点第一个请求（一般是 <code>booklist</code> 或 <code>user</code>）</p>
+  <p>往下翻找到 <strong>Request Headers</strong> → <strong>Cookie</strong></p>
+  <p>右键 → <strong>Copy Value</strong></p>
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='200'%3E%3Crect width='600' height='200' fill='%231a1a1a' rx='8'/%3E%3Ctext x='30' y='50' fill='%236c8cff' font-size='16' font-family='monospace'%3ERequest Headers%3C/text%3E%3Ctext x='30' y='85' fill='%23888' font-size='13' font-family='monospace'%3Eauthority: weread.qq.com%3C/text%3E%3Ctext x='30' y='110' fill='%23888' font-size='13' font-family='monospace'%3Emethod: GET%3C/text%3E%3Ctext x='30' y='140' fill='%23ff8' font-size='13' font-family='monospace'%3Ecookie: wr_gid=...%3C/text%3E%3C/svg%3E">
+</div>
+
+<div class="step">
+  <h3>4️⃣ 把 Cookie 发给我</h3>
+  <p>粘贴到聊天框里发给我就行！</p>
+  <p style="color:#555;font-size:.82rem;">Cookie 会安全存在你的电脑上，不会泄露。</p>
+</div>
+
+<p style="text-align:center;color:#555;margin-top:2rem;">
+  搞完之后，你在微信读书上看书、划线、写笔记 → 每30分钟自动同步到你的网站 ✅
+</p>
+
+</body>
+</html>
