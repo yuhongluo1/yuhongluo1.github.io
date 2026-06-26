@@ -314,7 +314,13 @@ function filterBooks() {
 // ─── Token ───
 function getToken() {
   let t = localStorage.getItem(TOKEN_KEY);
-  if (!t) { t = prompt('GitHub token:'); if (t) localStorage.setItem(TOKEN_KEY, t); }
+  if (!t) { 
+    t = prompt('Enter your GitHub token (one time only):\nhttps://github.com/settings/tokens\n\nYour token: ghp_...'); 
+    if (t) {
+      t = t.trim();
+      localStorage.setItem(TOKEN_KEY, t);
+    }
+  }
   return t;
 }
 function clearToken() { localStorage.removeItem(TOKEN_KEY); alert('Token cleared!'); }
