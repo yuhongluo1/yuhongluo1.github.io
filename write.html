@@ -16,85 +16,89 @@
   }
   .container { max-width: 800px; margin: 0 auto; }
 
-  /* ─── Header ─── */
-  .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:.3rem; flex-wrap:wrap; gap:.5rem; }
+  .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:.5rem; }
   .header h1 { font-size:1.4rem; }
-  .header .subtitle { color:#666; font-size:.85rem; }
-  .header-right { display:flex; gap:.6rem; align-items:center; }
-  .count { color:#555; font-size:.8rem; }
+  .header .subtitle { color:#666; font-size:.82rem; }
+  .header-right { display:flex; gap:.8rem; align-items:center; }
+  .count { color:#555; font-size:.78rem; }
 
-  /* ─── Form ─── */
-  .form-section { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; }
-  .form-group { flex:1; min-width:200px; }
-  .form-group label { display:block; color:#999; font-size:.8rem; margin-bottom:.25rem; }
-  .form-group input, .form-group select {
-    width:100%; background:#141414; border:1px solid #333; border-radius:6px;
-    color:#e0e0e0; padding:.6rem .8rem; font-size:.9rem; font-family:inherit;
+  /* ─── Tabs ─── */
+  .tabs { display:flex; gap:0; margin-bottom:1.2rem; border-bottom:1px solid #222; }
+  .tab {
+    padding:.5rem 1.2rem; cursor:pointer; color:#666; font-size:.85rem; font-weight:500;
+    border-bottom:2px solid transparent; transition:all .15s; user-select:none;
   }
-  .form-group input:focus, .form-group select:focus { outline:none; border-color:#6c8cff; }
+  .tab:hover { color:#aaa; }
+  .tab.active { color:#6c8cff; border-bottom-color:#6c8cff; }
+
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+
+  /* ─── Forms ─── */
+  .form-section { display:flex; gap:.8rem; flex-wrap:wrap; margin-bottom:.8rem; }
+  .form-group { flex:1; min-width:160px; }
+  .form-group label { display:block; color:#999; font-size:.78rem; margin-bottom:.2rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width:100%; background:#141414; border:1px solid #333; border-radius:6px;
+    color:#e0e0e0; padding:.55rem .75rem; font-size:.88rem; font-family:inherit;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline:none; border-color:#6c8cff; }
 
   /* ─── Toolbar ─── */
   .toolbar {
-    display:flex; gap:2px; padding:.4rem .6rem;
+    display:flex; gap:2px; padding:.35rem .6rem;
     background:#141414; border:1px solid #333; border-bottom:none;
     border-radius:8px 8px 0 0; flex-wrap:wrap;
   }
   .toolbar button {
     background:none; border:none; color:#888; cursor:pointer;
-    padding:.25rem .55rem; border-radius:4px; font-size:.85rem; transition:all .15s;
+    padding:.2rem .5rem; border-radius:4px; font-size:.82rem; transition:all .15s;
   }
   .toolbar button:hover { background:#222; color:#eee; }
-  .toolbar .sep { width:1px; background:#333; margin:.25rem .3rem; }
+  .toolbar .sep { width:1px; background:#333; margin:.2rem .3rem; }
 
-  /* ─── Editor + Preview ─── */
-  .editor-wrap { border:1px solid #333; border-radius:0 0 8px 8px; overflow:hidden; }
+  .editor-wrap { border:1px solid #333; border-radius:0 0 8px 8px; }
   .editor-wrap textarea {
-    width:100%; min-height:280px; padding:.8rem 1rem;
+    width:100%; min-height:200px; padding:.7rem 1rem;
     background:#0d0d0d; color:#e0e0e0; border:none;
-    font-size:.95rem; font-family:inherit; line-height:1.8; resize:vertical;
+    font-size:.9rem; font-family:inherit; line-height:1.8; resize:vertical;
   }
   .editor-wrap textarea:focus { outline:none; }
 
+  /* ─── Preview ─── */
   .preview-wrap {
-    border:1px solid #333; border-radius:8px; margin-top:1rem; padding:1rem 1.2rem;
+    border:1px solid #333; border-radius:8px; margin-top:.8rem; padding:.8rem 1rem;
     background:#141414; display:none;
   }
   .preview-wrap.visible { display:block; }
-  .preview-wrap .preview-label { color:#555; font-size:.75rem; text-transform:uppercase; letter-spacing:.5px; margin-bottom:.5rem; }
-  .preview-content { color:#bbb; font-size:.9rem; line-height:1.8; }
-  .preview-content h1 { font-size:1.2rem; color:#eee; margin:.5rem 0; }
-  .preview-content h2 { font-size:1.05rem; color:#ddd; margin:.4rem 0; }
-  .preview-content strong { color:#ddd; }
-  .preview-content em { color:#aaa; }
-  .preview-content p { margin:.3rem 0; }
+  .preview-wrap .preview-label { color:#555; font-size:.72rem; text-transform:uppercase; letter-spacing:.5px; margin-bottom:.4rem; }
+  .preview-content { color:#bbb; font-size:.88rem; line-height:1.8; }
 
   /* ─── Buttons ─── */
-  .actions { display:flex; gap:.5rem; margin-top:1rem; flex-wrap:wrap; }
+  .actions { display:flex; gap:.5rem; margin-top:.8rem; flex-wrap:wrap; }
   .btn {
-    padding:.65rem 1.5rem; border:none; border-radius:8px;
-    font-size:.9rem; font-weight:600; cursor:pointer; transition:all .2s;
+    padding:.6rem 1.4rem; border:none; border-radius:8px;
+    font-size:.88rem; font-weight:600; cursor:pointer; transition:all .2s;
   }
   .btn-primary { background:#6c8cff; color:#fff; }
   .btn-primary:hover { background:#5a7ae8; }
   .btn-primary:disabled { opacity:.4; cursor:not-allowed; }
   .btn-secondary { background:#222; color:#aaa; }
   .btn-secondary:hover { background:#333; color:#ddd; }
-  .btn-danger { background:#2a1a1a; color:#f88; }
-  .btn-danger:hover { background:#3a1a1a; }
 
-  .status { margin-top:.8rem; padding:.7rem 1rem; border-radius:8px; display:none; font-size:.9rem; }
+  .status { margin-top:.7rem; padding:.6rem 1rem; border-radius:8px; display:none; font-size:.85rem; }
   .status.success { display:block; background:#1a3a1a; border:1px solid #2a5a2a; color:#8f8; }
   .status.error { display:block; background:#3a1a1a; border:1px solid #5a2a2a; color:#f88; }
   .status.loading { display:block; background:#1a1a3a; border:1px solid #2a2a5a; color:#88f; }
   .status.info { display:block; background:#1a1a1a; border:1px solid #333; color:#aaa; }
 
-  .footer-links { text-align:center; color:#444; font-size:.8rem; margin-top:2rem; padding-top:1.5rem; border-top:1px solid #181818; }
+  .footer-links { text-align:center; color:#444; font-size:.78rem; margin-top:2rem; padding-top:1.2rem; border-top:1px solid #181818; }
   .footer-links a { color:#555; }
   .footer-links a:hover { color:#6c8cff; }
 
   @media (max-width:600px) {
     body { padding:1rem; }
-    .toolbar button { padding:.2rem .4rem; font-size:.8rem; }
+    .toolbar button { padding:.15rem .35rem; font-size:.78rem; }
   }
 </style>
 </head>
@@ -109,85 +113,140 @@
   </div>
   <div class="header-right">
     <span class="count" id="wordCount">0 words</span>
-    <span class="count">·</span>
     <span class="count" id="charCount">0 chars</span>
   </div>
 </div>
 
-<!-- ─── Form ─── -->
-<div class="form-section">
-  <div class="form-group" style="flex:2;">
-    <label for="title">Title</label>
-    <input type="text" id="title" placeholder="Post title..." oninput="autoSave()">
+<!-- ─── Tabs: Write / Reading Notes ─── -->
+<div class="tabs">
+  <div class="tab active" data-tab="write" onclick="switchTab('write')">📝 Write</div>
+  <div class="tab" data-tab="reading" onclick="switchTab('reading')">📖 Reading Notes</div>
+</div>
+
+<!-- ═══════════════ TAB: WRITE ═══════════════ -->
+<div class="tab-content active" id="tab-write">
+
+  <div class="form-section">
+    <div class="form-group" style="flex:2;">
+      <label for="w_title">Title</label>
+      <input type="text" id="w_title" placeholder="Post title...">
+    </div>
+    <div class="form-group">
+      <label for="w_section">Section</label>
+      <select id="w_section">
+        <option value="writing">📝 Writing</option>
+        <option value="personal">💭 Personal</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="w_date">Date</label>
+      <input type="month" id="w_date">
+    </div>
   </div>
-  <div class="form-group">
-    <label for="section">Section</label>
-    <select id="section" onchange="autoSave()">
-      <option value="writing">📝 Writing</option>
-      <option value="reading-notes">📖 Reading Notes</option>
-      <option value="personal">💭 Personal</option>
-    </select>
+
+  <div class="toolbar">
+    <button onclick="wrapText('w_content','**','**')"><strong>B</strong></button>
+    <button onclick="wrapText('w_content','*','*')"><em>I</em></button>
+    <button onclick="wrapText('w_content','[','](url)')">🔗</button>
+    <div class="sep"></div>
+    <button onclick="insertAt('w_content','\n## ')">H2</button>
+    <button onclick="insertAt('w_content','\n### ')">H3</button>
+    <div class="sep"></div>
+    <button onclick="insertAt('w_content','\n> ')">❝</button>
+    <button onclick="insertAt('w_content','\n- ')">•</button>
+    <button onclick="insertAt('w_content','\n---\n')">—</button>
+    <div class="sep"></div>
+    <button onclick="togglePreview('w_content','previewContent')">👁 Preview</button>
   </div>
-  <div class="form-group">
-    <label for="position">Position</label>
-    <select id="position">
-      <option value="top">Top (newest first)</option>
-      <option value="bottom">Bottom</option>
-    </select>
+
+  <div class="editor-wrap">
+    <textarea id="w_content" placeholder="Start writing... **bold** *italic* [links](url) ## headings" oninput="updateCounts('w_content')"></textarea>
   </div>
-  <div class="form-group">
-    <label for="postDate">Date</label>
-    <input type="month" id="postDate">
+
+  <div class="preview-wrap" id="previewWrap">
+    <div class="preview-label">Preview</div>
+    <div class="preview-content" id="previewContent"></div>
   </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="publishWrite()">📝 Publish</button>
+    <button class="btn btn-secondary" onclick="clearTab('w_title','w_content')">🗑 Clear</button>
+  </div>
+  <div id="status-write" class="status"></div>
 </div>
 
-<!-- ─── Toolbar ─── -->
-<div class="toolbar">
-  <button onclick="wrapText('**','**')" title="Bold"><strong>B</strong></button>
-  <button onclick="wrapText('*','*')" title="Italic"><em>I</em></button>
-  <button onclick="wrapText('[','](url)')" title="Link">🔗</button>
-  <div class="sep"></div>
-  <button onclick="insertBefore('\n## ')">H2</button>
-  <button onclick="insertBefore('\n### ')">H3</button>
-  <div class="sep"></div>
-  <button onclick="insertBefore('\n> ')" title="Quote">❝</button>
-  <button onclick="insertBefore('\n- ')" title="List">•</button>
-  <button onclick="insertBefore('\n---\n')" title="Divider">—</button>
-  <div class="sep"></div>
-  <button onclick="togglePreview()" id="previewBtn">👁 Preview</button>
-  <button onclick="clearAll()" title="Clear">🗑</button>
-</div>
+<!-- ═══════════════ TAB: READING NOTES ═══════════════ -->
+<div class="tab-content" id="tab-reading">
 
-<!-- ─── Editor ─── -->
-<div class="editor-wrap">
-  <textarea id="content" placeholder="Start writing... Markdown supported: **bold**, *italic*, [links](url), ## headings" oninput="updateCounts(); autoSave();"></textarea>
-</div>
+  <div class="form-section">
+    <div class="form-group" style="flex:1.5;">
+      <label for="r_book">Book</label>
+      <input type="text" id="r_book" placeholder="Search or type book name..." list="bookList" oninput="filterBooks()">
+      <datalist id="bookList">
+        <option value="Sapiens — Yuval Noah Harari">
+        <option value="Guns, Germs, and Steel — Jared Diamond">
+        <option value="From the Soil — 费孝通">
+        <option value="Misogyny — 上野千鹤子">
+        <option value="Maybe You Should Talk to Someone — Lori Gottlieb">
+        <option value="A Room of One's Own — Virginia Woolf">
+        <option value="The Noonday Demon — Andrew Solomon">
+        <option value="Wind, Sand and Stars — Antoine de Saint-Exupéry">
+        <option value="Crime and Punishment — Dostoevsky">
+        <option value="1984 — George Orwell">
+        <option value="To Kill a Mockingbird — Harper Lee">
+        <option value="Of Mice and Men — John Steinbeck">
+        <option value="Strait is the Gate — André Gide">
+        <option value="Gone with the Wind — Margaret Mitchell">
+        <option value="Flowers for Algernon — Daniel Keyes">
+        <option value="Forrest Gump — Winston Groom">
+        <option value="Narrative of the Life of Frederick Douglass — Frederick Douglass">
+        <option value="The Great Gatsby — F. Scott Fitzgerald">
+        <option value="我与地坛 — 史铁生">
+        <option value="Life and Death Are Wearing Me Out — 莫言">
+        <option value="The Three-Body Problem — 刘慈欣">
+      </datalist>
+    </div>
+    <div class="form-group">
+      <label for="r_type">Type</label>
+      <select id="r_type">
+        <option value="quote">💬 Quote</option>
+        <option value="thought">🧠 My thought</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="r_page">Page (optional)</label>
+      <input type="text" id="r_page" placeholder="e.g. 47">
+    </div>
+  </div>
 
-<!-- ─── Preview ─── -->
-<div class="preview-wrap" id="preview">
-  <div class="preview-label">Preview</div>
-  <div class="preview-content" id="previewContent"></div>
-</div>
+  <div class="toolbar">
+    <button onclick="wrapText('r_content','**','**')"><strong>B</strong></button>
+    <button onclick="wrapText('r_content','*','*')"><em>I</em></button>
+    <div class="sep"></div>
+    <button onclick="insertAt('r_content','"')">“ ”</button>
+    <button onclick="insertAt('r_content','\n> ')" title="Block quote">❝</button>
+  </div>
 
-<!-- ─── Actions ─── -->
-<div class="actions">
-  <button class="btn btn-primary" id="publishBtn" onclick="publish()">📝 Publish</button>
-  <button class="btn btn-secondary" onclick="saveDraft()">💾 Save draft</button>
-  <button class="btn btn-secondary" id="showDraftsBtn" onclick="showDrafts()">📂 Drafts</button>
-  <button class="btn btn-danger" onclick="clearAll()">🗑 Clear</button>
-</div>
-<div id="status" class="status"></div>
+  <div class="editor-wrap">
+    <textarea id="r_content" placeholder="Paste the quote or write your thoughts here..." style="min-height:150px;" oninput="updateCounts('r_content')"></textarea>
+  </div>
 
-<!-- ─── Drafts Panel ─── -->
-<div class="preview-wrap" id="draftsPanel">
-  <div class="preview-label">Saved Drafts</div>
-  <div id="draftsList"></div>
+  <div class="preview-wrap" id="readingPreviewWrap">
+    <div class="preview-label">Preview</div>
+    <div class="preview-content" id="readingPreviewContent"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="publishReadingNote()">📖 Save note</button>
+    <button class="btn btn-secondary" onclick="togglePreview('r_content','readingPreviewContent')">👁 Preview</button>
+    <button class="btn btn-secondary" onclick="clearTab('r_book','r_content','r_page')">🗑 Clear</button>
+  </div>
+  <div id="status-reading" class="status"></div>
 </div>
 
 <div class="footer-links">
   <a href="https://yuhongluo1.github.io">← Back to site</a>
-  · <a href="#" onclick="clearToken();return false;">Clear saved token</a>
-  · <span id="lastSaved"></span>
+  · <a href="#" onclick="clearToken();return false;">Clear token</a>
 </div>
 </div>
 
@@ -195,205 +254,119 @@
 const GITHUB_USER = 'yuhongluo1';
 const GITHUB_REPO = 'yuhongluo1.github.io';
 const BRANCH = 'main';
-const DRAFT_KEY = 'yh_write_draft';
-const DRAFTS_LIST_KEY = 'yh_drafts_list';
 const TOKEN_KEY = 'yh_gh_token';
 
+// ─── Tab switching ───
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.toggle('active', t.id === 'tab-' + name));
+}
+
 // ─── Counts ───
-function updateCounts() {
-  const t = document.getElementById('content').value;
-  const words = t.trim() ? t.trim().split(/\s+/).length : 0;
-  document.getElementById('wordCount').textContent = words + ' word' + (words!==1?'s':'');
+function updateCounts(id) {
+  const t = document.getElementById(id).value;
+  document.getElementById('wordCount').textContent = (t.trim() ? t.trim().split(/\s+/).length : 0) + ' words';
   document.getElementById('charCount').textContent = t.length + ' chars';
 }
 
 // ─── Toolbar ───
-function wrapText(before, after) {
-  const ta = document.getElementById('content');
-  const start = ta.selectionStart, end = ta.selectionEnd;
-  const text = ta.value;
-  ta.value = text.slice(0, start) + before + text.slice(start, end) + after + text.slice(end);
-  ta.focus();
-  ta.selectionStart = start + before.length;
-  ta.selectionEnd = end + before.length;
-  updateCounts(); autoSave();
+function wrapText(taId, before, after) {
+  const ta = document.getElementById(taId);
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  ta.value = ta.value.slice(0, s) + before + ta.value.slice(s, e) + after + ta.value.slice(e);
+  ta.focus(); ta.selectionStart = s + before.length; ta.selectionEnd = e + before.length;
+  updateCounts(taId);
 }
 
-function insertBefore(text) {
-  const ta = document.getElementById('content');
-  const start = ta.selectionStart;
-  const before = ta.value.slice(0, start);
-  const after = ta.value.slice(start);
-  // Insert at line start
+function insertAt(taId, text) {
+  const ta = document.getElementById(taId);
+  const s = ta.selectionStart;
+  const before = ta.value.slice(0, s);
   const lineStart = before.lastIndexOf('\n') + 1;
-  ta.value = before.slice(0, lineStart) + text + before.slice(lineStart) + after;
-  ta.focus();
-  ta.selectionStart = ta.selectionEnd = lineStart + text.length;
-  updateCounts(); autoSave();
+  ta.value = before.slice(0, lineStart) + text + before.slice(lineStart) + ta.value.slice(s);
+  ta.focus(); ta.selectionStart = ta.selectionEnd = lineStart + text.length;
+  updateCounts(taId);
 }
 
 // ─── Preview ───
-let previewVisible = false;
-function togglePreview() {
-  previewVisible = !previewVisible;
-  document.getElementById('preview').classList.toggle('visible', previewVisible);
-  document.getElementById('previewBtn').textContent = previewVisible ? '✏️ Editor' : '👁 Preview';
-  if (previewVisible) updatePreview();
-}
-function updatePreview() {
-  if (!previewVisible) return;
-  const md = document.getElementById('content').value;
-  let html = md
-    .replace(/### (.+)/g, '<h3>$1</h3>')
-    .replace(/## (.+)/g, '<h2>$1</h2>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:#6c8cff;">$1</a>')
-    .replace(/^> (.+)/gm, '<blockquote style="border-left:3px solid #444;padding-left:.8rem;color:#888;">$1</blockquote>')
-    .replace(/^- (.+)/gm, '• $1<br>')
-    .replace(/\n---\n/g, '<hr style="border:none;border-top:1px solid #333;margin:1rem 0;">')
-    .split('\n\n').filter(b => b.trim()).map(b => {
-      if (b.startsWith('<h') || b.startsWith('<blockquote') || b.startsWith('•') || b.startsWith('<hr')) return b;
-      return '<p>' + b.replace(/\n/g, '<br>') + '</p>';
-    }).join('\n');
-  document.getElementById('previewContent').innerHTML = html;
-}
-
-// ─── Auto-save draft ───
-function autoSave() {
-  const draft = {
-    title: document.getElementById('title').value,
-    section: document.getElementById('section').value,
-    content: document.getElementById('content').value,
-    date: document.getElementById('postDate').value,
-    saved: new Date().toISOString()
-  };
-  localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-  document.getElementById('lastSaved').textContent = 'Draft auto-saved';
-}
-
-// ─── Save/Load Drafts ───
-function saveDraft() {
-  const title = document.getElementById('title').value || 'Untitled';
-  const content = document.getElementById('content').value;
-  if (!content) { showStatus('Nothing to save.', 'info'); return; }
-  
-  let drafts = JSON.parse(localStorage.getItem(DRAFTS_LIST_KEY) || '[]');
-  drafts.unshift({
-    title, section: document.getElementById('section').value,
-    content, date: document.getElementById('postDate').value,
-    saved: new Date().toISOString()
-  });
-  if (drafts.length > 10) drafts = drafts.slice(0, 10);
-  localStorage.setItem(DRAFTS_LIST_KEY, JSON.stringify(drafts));
-  showStatus('✅ Draft saved!', 'success');
-}
-
-function showDrafts() {
-  const panel = document.getElementById('draftsPanel');
-  const list = document.getElementById('draftsList');
-  const drafts = JSON.parse(localStorage.getItem(DRAFTS_LIST_KEY) || '[]');
-  
-  if (drafts.length === 0) {
-    list.innerHTML = '<p style="color:#555;font-style:italic;">No saved drafts.</p>';
-  } else {
-    list.innerHTML = drafts.map((d, i) => `
-      <div style="background:#0d0d0d;border:1px solid #222;border-radius:6px;padding:.6rem .8rem;margin-bottom:.4rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;"
-           onclick="loadDraft(${i})">
-        <div>
-          <strong style="color:#ccc;font-size:.85rem;">${d.title}</strong>
-          <span style="color:#555;font-size:.75rem;margin-left:.5rem;">${new Date(d.saved).toLocaleString()}</span>
-        </div>
-        <span style="color:#6c8cff;font-size:.75rem;">Load</span>
-      </div>
-    `).join('');
+function togglePreview(srcId, destId) {
+  const wrap = document.getElementById(srcId === 'w_content' ? 'previewWrap' : 'readingPreviewWrap');
+  wrap.classList.toggle('visible');
+  if (wrap.classList.contains('visible')) {
+    let md = document.getElementById(srcId).value;
+    document.getElementById(destId).innerHTML = md
+      .replace(/### (.+)/g, '<h3>$1</h3>').replace(/## (.+)/g, '<h2>$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:#6c8cff;">$1</a>')
+      .replace(/^> (.+)/gm, '<blockquote style="border-left:3px solid #444;padding-left:.8rem;color:#888;">$1</blockquote>')
+      .replace(/\n/g, '<br>');
   }
-  panel.classList.toggle('visible');
 }
 
-function loadDraft(idx) {
-  const drafts = JSON.parse(localStorage.getItem(DRAFTS_LIST_KEY) || '[]');
-  if (!drafts[idx]) return;
-  const d = drafts[idx];
-  document.getElementById('title').value = d.title;
-  document.getElementById('section').value = d.section;
-  document.getElementById('content').value = d.content;
-  if (d.date) document.getElementById('postDate').value = d.date;
-  updateCounts(); autoSave(); updatePreview();
-  document.getElementById('draftsPanel').classList.remove('visible');
-  showStatus('📂 Draft loaded!', 'info');
-}
-
-// ─── Clear ───
-function clearAll() {
-  if (!confirm('Clear everything? Unsaved changes will be lost.')) return;
-  document.getElementById('title').value = '';
-  document.getElementById('content').value = '';
-  document.getElementById('status').className = 'status';
-  updateCounts();
-  localStorage.removeItem(DRAFT_KEY);
-  showStatus('Cleared.', 'info');
+// ─── Book filter ───
+function filterBooks() {
+  const input = document.getElementById('r_book').value.toLowerCase();
+  document.querySelectorAll('#bookList option').forEach(o => {
+    o.style.display = o.value.toLowerCase().includes(input) ? '' : 'none';
+  });
 }
 
 // ─── Token ───
 function getToken() {
-  let token = localStorage.getItem(TOKEN_KEY);
-  if (!token) {
-    token = prompt('Enter your GitHub token (one time only):\nhttps://github.com/settings/tokens');
-    if (token) localStorage.setItem(TOKEN_KEY, token);
-  }
-  return token;
+  let t = localStorage.getItem(TOKEN_KEY);
+  if (!t) { t = prompt('GitHub token:'); if (t) localStorage.setItem(TOKEN_KEY, t); }
+  return t;
 }
-function clearToken() {
-  localStorage.removeItem(TOKEN_KEY);
-  alert('Token cleared!');
+function clearToken() { localStorage.removeItem(TOKEN_KEY); alert('Token cleared!'); }
+
+// ─── Status ───
+function showStatus(elId, msg, type) {
+  const el = document.getElementById(elId);
+  el.className = 'status ' + type;
+  el.innerHTML = msg;
 }
 
-// ─── Publish ───
-async function publish() {
-  const title = document.getElementById('title').value.trim();
-  const content = document.getElementById('content').value.trim();
-  const section = document.getElementById('section').value;
-  const position = document.getElementById('position').value;
-  const btn = document.getElementById('publishBtn');
+// ─── Set dates on load ───
+window.addEventListener('DOMContentLoaded', () => {
+  const now = new Date();
+  const ym = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+  document.getElementById('w_date').value = ym;
+});
 
-  if (!title || !content) {
-    showStatus('❌ Please enter a title and content.', 'error');
-    return;
-  }
+// ═══════════════════════════════════════════
+//  PUBLISH: General write
+// ═══════════════════════════════════════════
+async function publishWrite() {
+  const title = document.getElementById('w_title').value.trim();
+  const content = document.getElementById('w_content').value.trim();
+  const section = document.getElementById('w_section').value;
+  const dateInput = document.getElementById('w_date');
+  const btn = document.querySelector('#tab-write .btn-primary');
+
+  if (!title || !content) { showStatus('status-write', '❌ Need title + content.', 'error'); return; }
 
   const token = getToken();
-  if (!token) { showStatus('❌ No GitHub token.', 'error'); return; }
+  if (!token) { showStatus('status-write', '❌ No token.', 'error'); return; }
 
   btn.disabled = true;
-  showStatus('⏳ Publishing...', 'loading');
+  showStatus('status-write', '⏳ Publishing...', 'loading');
 
-  const date = new Date();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const dateInput = document.getElementById('postDate');
   const dateVal = dateInput.value;
-  let dateStr;
-  if (dateVal) {
-    const [y, m] = dateVal.split('-');
-    dateStr = months[parseInt(m)-1] + ' ' + y;
-  } else {
-    dateStr = months[date.getMonth()] + ' ' + date.getFullYear();
-  }
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  let dateStr = months[new Date().getMonth()] + ' ' + new Date().getFullYear();
+  if (dateVal) { const [y,m] = dateVal.split('-'); dateStr = months[parseInt(m)-1] + ' ' + y; }
 
-  // Build post HTML
   const bodyHtml = content
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
-    .split('\n\n').filter(b => b.trim()).map(b => '<p>' + b.replace(/\n/g, '<br>') + '</p>').join('\n');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .split('\n\n').filter(b=>b.trim()).map(b=>'<p>'+b.replace(/\n/g,'<br>')+'</p>').join('\n');
 
   const postHtml = `
     <div class="blog-post">
       <span class="date">${dateStr}</span>
       <details>
         <summary style="cursor:pointer;list-style:none;">
-          <h3 style="display:inline;">${escapeHtml(title)}</h3>
+          <h3 style="display:inline;">${escHtml(title)}</h3>
         </summary>
         <div class="content">
           ${bodyHtml}
@@ -402,119 +375,151 @@ async function publish() {
     </div>`;
 
   try {
-    // Get current file
     const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/index.html`;
-    const getResp = await fetch(url, {
-      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-    });
-    if (!getResp.ok) throw new Error('Failed to fetch page (' + getResp.status + ')');
-    
+    const getResp = await fetch(url, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }});
+    if (!getResp.ok) throw new Error('Fetch failed (' + getResp.status + ')');
     const fileData = await getResp.json();
     let current = decodeUTF8(fileData.content);
 
-    // Find section and insert
-    const sectionMarker = `id="${section}"`;
-    const secIdx = current.indexOf(sectionMarker);
-    if (secIdx === -1) throw new Error(`Section "${section}" not found`);
+    const marker = `id="${section}"`;
+    const idx = current.indexOf(marker);
+    if (idx === -1) throw new Error(`Section #${section} not found`);
+    const closeIdx = current.indexOf('</section>', idx);
+    current = current.slice(0, closeIdx) + postHtml + '\n  ' + current.slice(closeIdx);
 
-    const closeIdx = current.indexOf('</section>', secIdx);
-    if (closeIdx === -1) throw new Error('Could not find section end');
-
-    if (position === 'top') {
-      // Insert right after the first blog-post or the opening div
-      const firstPost = current.indexOf('<div class="blog-post"', secIdx);
-      if (firstPost > -1 && firstPost < closeIdx) {
-        current = current.slice(0, firstPost) + postHtml + '\n' + current.slice(firstPost);
-      } else {
-        current = current.slice(0, closeIdx) + postHtml + '\n  ' + current.slice(closeIdx);
-      }
-    } else {
-      current = current.slice(0, closeIdx) + postHtml + '\n  ' + current.slice(closeIdx);
-    }
-
-    // Commit
     const commitResp = await fetch(url, {
       method: 'PUT',
-      headers: {
-        'Authorization': `token ${token}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/vnd.github.v3+json'
-      },
-      body: JSON.stringify({
-        message: `✏️ ${title}`,
-        content: btoa(encodeUTF8(current)),
-        sha: fileData.sha,
-        branch: BRANCH
-      })
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+      body: JSON.stringify({ message: `✏️ ${title}`, content: btoa(encodeUTF8(current)), sha: fileData.sha, branch: BRANCH })
     });
+    if (!commitResp.ok) { const e = await commitResp.json(); throw new Error(e.message || 'Publish failed'); }
 
-    if (!commitResp.ok) {
-      const err = await commitResp.json();
-      throw new Error(err.message || 'Publish failed');
+    showStatus('status-write', `✅ Published! <a href="https://yuhongluo1.github.io" style="color:#6c8cff;">View →</a>`, 'success');
+    document.getElementById('w_title').value = '';
+    document.getElementById('w_content').value = '';
+    updateCounts('w_content');
+  } catch (err) { showStatus('status-write', '❌ ' + err.message, 'error'); }
+  btn.disabled = false;
+}
+
+// ═══════════════════════════════════════════
+//  PUBLISH: Reading note
+// ═══════════════════════════════════════════
+async function publishReadingNote() {
+  const book = document.getElementById('r_book').value.trim();
+  const type = document.getElementById('r_type').value;
+  const page = document.getElementById('r_page').value.trim();
+  const content = document.getElementById('r_content').value.trim();
+  const btn = document.querySelector('#tab-reading .btn-primary');
+
+  if (!book || !content) { showStatus('status-reading', '❌ Need book name + content.', 'error'); return; }
+
+  const token = getToken();
+  if (!token) { showStatus('status-reading', '❌ No token.', 'error'); return; }
+
+  btn.disabled = true;
+  showStatus('status-reading', '⏳ Saving...', 'loading');
+
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+
+  const escContent = content
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+  const typeLabel = type === 'quote' ? '💬 Quote' : '🧠 Thought';
+  const pageInfo = page ? ` · p.${page}` : '';
+
+  const noteHtml = `
+    <div class="blog-post" style="border-color:#2a2a2a;padding:.35rem .6rem;margin-bottom:.3rem;font-size:.82rem;">
+      <span style="color:#555;font-size:.72rem;">${typeLabel}${pageInfo} · ${dateStr}</span>
+      <p style="margin-top:.15rem;">${escContent}</p>
+    </div>`;
+
+  try {
+    const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/index.html`;
+    const getResp = await fetch(url, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }});
+    if (!getResp.ok) throw new Error('Fetch failed (' + getResp.status + ')');
+    const fileData = await getResp.json();
+    let current = decodeUTF8(fileData.content);
+
+    // Find the book in the Reading section by looking for its name in a summary
+    // Look for the book name inside a <summary> tag within the reading section
+    const readingSection = current.indexOf('id="reading"');
+    if (readingSection === -1) throw new Error('Reading section not found');
+
+    // Find the specific book's details element
+    // Search for: <strong>Book Name</strong> <span style="color:#555;">— Author</span>
+    const bookSearch = `<strong>${escHtml(book.split(' — ')[0] || book)}</strong>`;
+    const bookIdx = current.indexOf(bookSearch, readingSection);
+    
+    if (bookIdx > -1) {
+      // Found the book - find its content div and insert before the "No notes yet" or after existing notes
+      const contentDiv = current.indexOf('<div class="content"', bookIdx);
+      const contentInner = current.indexOf('<div class="content"', contentDiv + 10);
+      const contentEnd = current.indexOf('</div>', current.indexOf('</div>', current.indexOf('</details>', contentDiv) - 20) + 6);
+      
+      if (contentInner > -1) {
+        // Find "No notes yet" and replace it with the note
+        const noNotes = current.indexOf('No notes yet', contentInner);
+        if (noNotes > -1 && noNotes < contentInner + 200) {
+          const pStart = current.lastIndexOf('<p', noNotes);
+          const pEnd = current.indexOf('</p>', noNotes) + 4;
+          current = current.slice(0, pStart) + noteHtml + current.slice(pEnd);
+        } else {
+          // Insert after existing notes
+          const closeDiv = current.indexOf('</div>', current.indexOf('</div>', contentInner) + 6);
+          current = current.slice(0, closeDiv) + noteHtml + current.slice(closeDiv);
+        }
+      }
+    } else {
+      // Book not found in the reading list - add as a reading note post instead
+      const postHtml = `
+    <div class="blog-post" style="border-color:#2a2a2a;padding:.5rem .8rem;margin-bottom:.4rem;">
+      <details>
+        <summary style="cursor:pointer;list-style:none;font-size:.85rem;">
+          <strong>${escHtml(book)}</strong>
+        </summary>
+        <div class="content" style="margin-top:.4rem;padding-top:.4rem;border-top:1px solid #222;">
+          ${noteHtml}
+          <p style="color:#666;font-style:italic;font-size:.82rem;">No notes yet.</p>
+        </div>
+      </details>
+    </div>`;
+      
+      // Find the reading section's blog-list and insert
+      const blogListStart = current.indexOf('class="blog-list"', readingSection);
+      const firstPost = current.indexOf('<div class="blog-post"', blogListStart);
+      if (firstPost > -1 && firstPost < readingSection + 2000) {
+        current = current.slice(0, firstPost) + postHtml + '\n          ' + current.slice(firstPost);
+      }
     }
 
-    showStatus(`✅ Published! <a href="https://yuhongluo1.github.io" style="color:#6c8cff;">View site →</a>`, 'success');
-    document.getElementById('title').value = '';
-    document.getElementById('content').value = '';
-    updateCounts();
-    localStorage.removeItem(DRAFT_KEY);
+    const commitResp = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+      body: JSON.stringify({ message: `📖 Note: ${book}`, content: btoa(encodeUTF8(current)), sha: fileData.sha, branch: BRANCH })
+    });
+    if (!commitResp.ok) { const e = await commitResp.json(); throw new Error(e.message || 'Save failed'); }
 
-  } catch (err) {
-    showStatus('❌ ' + err.message, 'error');
-  }
-
+    showStatus('status-reading', `✅ Note saved! <a href="https://yuhongluo1.github.io" style="color:#6c8cff;">View →</a>`, 'success');
+    document.getElementById('r_book').value = '';
+    document.getElementById('r_content').value = '';
+    document.getElementById('r_page').value = '';
+  } catch (err) { showStatus('status-reading', '❌ ' + err.message, 'error'); }
   btn.disabled = false;
 }
 
 // ─── Helpers ───
-function showStatus(msg, type) {
-  const el = document.getElementById('status');
-  el.className = 'status ' + type;
-  el.innerHTML = msg;
+function escHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function encodeUTF8(s) { return unescape(encodeURIComponent(s)); }
+function decodeUTF8(s) { try { return decodeURIComponent(escape(atob(s))); } catch(e) { return atob(s); } }
+function clearTab() {
+  Array.from(arguments).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
 }
-
-function escapeHtml(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function encodeUTF8(s) {
-  return unescape(encodeURIComponent(s));
-}
-function decodeUTF8(s) {
-  try { return decodeURIComponent(escape(atob(s))); }
-  catch(e) { return atob(s); }
-}
-
-// ─── Restore draft on load ───
-window.addEventListener('DOMContentLoaded', () => {
-  // Set default date to current month
-  const now = new Date();
-  document.getElementById('postDate').value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
-  
-  const saved = localStorage.getItem(DRAFT_KEY);
-  if (saved) {
-    try {
-      const d = JSON.parse(saved);
-      if (d.content) {
-        document.getElementById('title').value = d.title || '';
-        document.getElementById('section').value = d.section || 'writing';
-        document.getElementById('content').value = d.content;
-        if (d.date) document.getElementById('postDate').value = d.date;
-        updateCounts();
-        document.getElementById('lastSaved').textContent = 'Draft restored';
-      }
-    } catch(e) {}
-  }
-  updateCounts();
-});
-
-// Keyboard shortcut: Ctrl+Enter to publish
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-    e.preventDefault();
-    publish();
-  }
-});
 </script>
 </body>
 </html>
