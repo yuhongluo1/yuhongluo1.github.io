@@ -134,6 +134,10 @@
       <option value="bottom">Bottom</option>
     </select>
   </div>
+  <div class="form-group">
+    <label for="postDate">Date</label>
+    <input type="month" id="postDate">
+  </div>
 </div>
 
 <!-- ─── Toolbar ─── -->
@@ -260,6 +264,7 @@ function autoSave() {
     title: document.getElementById('title').value,
     section: document.getElementById('section').value,
     content: document.getElementById('content').value,
+    date: document.getElementById('postDate').value,
     saved: new Date().toISOString()
   };
   localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
@@ -275,7 +280,8 @@ function saveDraft() {
   let drafts = JSON.parse(localStorage.getItem(DRAFTS_LIST_KEY) || '[]');
   drafts.unshift({
     title, section: document.getElementById('section').value,
-    content, saved: new Date().toISOString()
+    content, date: document.getElementById('postDate').value,
+    saved: new Date().toISOString()
   });
   if (drafts.length > 10) drafts = drafts.slice(0, 10);
   localStorage.setItem(DRAFTS_LIST_KEY, JSON.stringify(drafts));
@@ -311,6 +317,7 @@ function loadDraft(idx) {
   document.getElementById('title').value = d.title;
   document.getElementById('section').value = d.section;
   document.getElementById('content').value = d.content;
+  if (d.date) document.getElementById('postDate').value = d.date;
   updateCounts(); autoSave(); updatePreview();
   document.getElementById('draftsPanel').classList.remove('visible');
   showStatus('📂 Draft loaded!', 'info');
@@ -362,7 +369,15 @@ async function publish() {
 
   const date = new Date();
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const dateStr = months[date.getMonth()] + ' ' + date.getFullYear();
+  const dateInput = document.getElementById('postDate');
+  const dateVal = dateInput.value;
+  let dateStr;
+  if (dateVal) {
+    const [y, m] = dateVal.split('-');
+    dateStr = months[parseInt(m)-1] + ' ' + y;
+  } else {
+    dateStr = months[date.getMonth()] + ' ' + date.getFullYear();
+  }
 
   // Build post HTML
   const bodyHtml = content
@@ -471,6 +486,10 @@ function decodeUTF8(s) {
 
 // ─── Restore draft on load ───
 window.addEventListener('DOMContentLoaded', () => {
+  // Set default date to current month
+  const now = new Date();
+  document.getElementById('postDate').value = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+  
   const saved = localStorage.getItem(DRAFT_KEY);
   if (saved) {
     try {
@@ -479,6 +498,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('title').value = d.title || '';
         document.getElementById('section').value = d.section || 'writing';
         document.getElementById('content').value = d.content;
+        if (d.date) document.getElementById('postDate').value = d.date;
         updateCounts();
         document.getElementById('lastSaved').textContent = 'Draft restored';
       }
