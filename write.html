@@ -121,6 +121,7 @@
 <div class="tabs">
   <div class="tab active" data-tab="write" onclick="switchTab('write')">📝 Write</div>
   <div class="tab" data-tab="reading" onclick="switchTab('reading')">📖 Reading Notes</div>
+  <div class="tab" data-tab="addbook" onclick="switchTab('addbook')">📕 Add Book</div>
 </div>
 
 <!-- ═══════════════ TAB: WRITE ═══════════════ -->
@@ -242,6 +243,35 @@
     <button class="btn btn-secondary" onclick="clearTab('r_book','r_content','r_page')">🗑 Clear</button>
   </div>
   <div id="status-reading" class="status"></div>
+</div>
+
+<!-- ═══════════════ TAB: ADD BOOK ═══════════════ -->
+<div class="tab-content" id="tab-addbook">
+  <p style="color:#666;font-size:.85rem;margin-bottom:1rem;">Add a new book to your reading list.</p>
+  <div class="form-section">
+    <div class="form-group" style="flex:2;">
+      <label for="ab_title">Book title</label>
+      <input type="text" id="ab_title" placeholder="e.g. The Great Gatsby">
+    </div>
+    <div class="form-group">
+      <label for="ab_author">Author</label>
+      <input type="text" id="ab_author" placeholder="e.g. F. Scott Fitzgerald">
+    </div>
+  </div>
+  <div class="form-section">
+    <div class="form-group">
+      <label for="ab_category">Category</label>
+      <select id="ab_category">
+        <option value="Social Sciences &amp; Psychology">🧠 Social Sciences &amp; Psychology</option>
+        <option value="Fiction &amp; Literature">📖 Fiction &amp; Literature</option>
+        <option value="Chinese Literature">🇨🇳 Chinese Literature</option>
+      </select>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" onclick="addBook()">📕 Add Book</button>
+  </div>
+  <div id="status-addbook" class="status"></div>
 </div>
 
 <div class="footer-links">
@@ -528,6 +558,72 @@ function clearTab() {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+}
+
+// ═══════════════════════════════════════════
+//  ADD BOOK
+// ═══════════════════════════════════════════
+async function addBook() {
+  const title = document.getElementById('ab_title').value.trim();
+  const author = document.getElementById('ab_author').value.trim();
+  const category = document.getElementById('ab_category').value;
+  const btn = document.querySelector('#tab-addbook .btn-primary');
+
+  if (!title || !author) { showStatus('status-addbook', '❌ Need title + author.', 'error'); return; }
+
+  const token = getToken();
+  if (!token) { showStatus('status-addbook', '❌ No token.', 'error'); return; }
+
+  btn.disabled = true;
+  showStatus('status-addbook', '⏳ Adding book...', 'loading');
+
+  const bookHtml = `
+          <div class="blog-post" style="border-color:#2a2a2a;padding:.5rem .8rem;margin-bottom:.4rem;">
+            <details><summary style="cursor:pointer;list-style:none;font-size:.85rem;"><strong>${escHtml(title)}</strong> <span style="color:#555;">— ${escHtml(author)}</span></summary>
+            <div class="content" style="margin-top:.4rem;padding-top:.4rem;border-top:1px solid #222;"><p style="color:#666;font-style:italic;font-size:.82rem;">No notes yet.</p></div></details>
+          </div>`;
+
+  try {
+    const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/index.html`;
+    const getResp = await fetch(url, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }});
+    if (!getResp.ok) throw new Error('Fetch failed (' + getResp.status + ')');
+    const fileData = await getResp.json();
+    let current = decodeUTF8(fileData.content);
+
+    // Find the correct category subsection in the Reading section
+    // Look for the category header text
+    const readingStart = current.indexOf('id="reading"');
+    if (readingStart === -1) throw new Error('Reading section not found');
+
+    // Find the category - look for the summary containing the category name
+    const catSearch = category;
+    const catIdx = current.indexOf(catSearch, readingStart);
+    if (catIdx === -1) throw new Error('Category not found: ' + category);
+
+    // Find the blog-list div after this category's summary
+    const summaryEnd = current.indexOf('</summary>', catIdx);
+    const blogListStart = current.indexOf('class="blog-list"', summaryEnd);
+    
+    if (blogListStart > -1 && blogListStart < summaryEnd + 500) {
+      // Insert at the beginning of this blog-list
+      const firstPost = current.indexOf('<div class="blog-post"', blogListStart);
+      if (firstPost > -1) {
+        current = current.slice(0, firstPost) + bookHtml + '\n          ' + current.slice(firstPost);
+      }
+    }
+
+    const commitResp = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+      body: JSON.stringify({ message: `📕 Add book: ${title}`, content: btoa(encodeUTF8(current)), sha: fileData.sha, branch: BRANCH })
+    });
+    if (!commitResp.ok) { const e = await commitResp.json(); throw new Error(e.message || 'Failed'); }
+
+    showStatus('status-addbook', `✅ ${title} added! <a href="https://yuhongluo1.github.io" style="color:#6c8cff;">View →</a>`, 'success');
+    document.getElementById('ab_title').value = '';
+    document.getElementById('ab_author').value = '';
+  } catch (err) { showStatus('status-addbook', '❌ ' + err.message, 'error'); }
+  btn.disabled = false;
 }
 </script>
 </body>
