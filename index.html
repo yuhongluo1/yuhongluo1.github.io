@@ -137,9 +137,8 @@
     .blog-post .date { font-size: .8rem; color: #555; }
     .blog-post h3 { font-size: 1rem; margin: .2rem 0 .3rem; }
     .blog-post p { font-size: .88rem; color: #777; }
-    .blog-post.empty {
-      border: 1px dashed #333; color: #555; text-align: center; padding: 2rem;
-    }
+    .blog-post .content { font-size: .95rem; color: #bbb; line-height: 1.8; margin-top: .5rem; }
+    .blog-post .content p { font-size: .95rem; color: #bbb; line-height: 1.8; margin-bottom: 1rem; }
 
     /* ─── Contact ─── */
     .contact-links {
@@ -178,6 +177,7 @@
 <nav>
   <ul>
     <li><a href="#about">About</a></li>
+    <li><a href="#activities">Activities</a></li>
     <li><a href="#reading">Reading</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -205,7 +205,10 @@
   <h2 class="section-title"><span class="icon">👤</span> About Me</h2>
   <p class="section-desc">A quick introduction</p>
   <div style="display:flex;gap:2rem;flex-wrap:wrap;align-items:start;margin-bottom:2rem;">
-    <img src="profile.jpg" alt="Yuhong Luo" style="width:200px;border-radius:12px;border:1px solid #222;flex-shrink:0;">
+    <div style="display:flex;flex-direction:column;gap:1rem;flex-shrink:0;">
+      <img src="profile.jpg" alt="Yuhong Luo" style="width:200px;border-radius:12px;border:1px solid #222;">
+      <img src="identity-map.jpg" alt="Identity Map" title="Identity Map — a visual self-portrait" style="width:200px;border-radius:12px;border:1px solid #222;cursor:help;">
+    </div>
     <div style="flex:1;min-width:250px;">
       <div class="about-text">
     <p>
@@ -214,7 +217,7 @@
     </p>
 
     <p>
-      🐕 Dog person (4-year-old Golden Retriever) · 🎤 Singer &amp; handcrafter · 🎾 Tennis
+      🐕 Dog person (瑞瑞 — 4-year-old Golden Retriever) · 🎤 Singer &amp; handcrafter · 🎾 Tennis
     </p>
 
     <p>
@@ -257,8 +260,56 @@
       </div>
     </div>
     </a>
-    <div class="project-card empty">
-      ✨ More projects coming soon
+    <div class="project-card">
+      <h3>🎭 Come From Away — Subtitles</h3>
+      <p>Bilingual (CN/EN) subtitle project for the musical <em>Come From Away</em> (《来自远方》). Script alignment, translation gap analysis, and insert planning for live performance.</p>
+      <div class="tags">
+        <span class="tag">PPTX</span>
+        <span class="tag">Script alignment</span>
+        <span class="tag">Bilingual</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Activities ─── -->
+<section id="activities">
+  <h2 class="section-title"><span class="icon">🌟</span> Activities</h2>
+  <p class="section-desc">Things I've done outside the classroom</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <h3>🔬 PIONEER Academics Research</h3>
+      <p>Selective research program conducting academic research in sociology &amp; gender studies. Developed research proposal, literature review, and annotated bibliography.</p>
+      <div class="tags">
+        <span class="tag">Research</span>
+        <span class="tag">Sociology</span>
+        <span class="tag">Academic Writing</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <h3>🏫 UChicago Summer Program</h3>
+      <p>Attended the University of Chicago summer session, completing college-level coursework with academic writing and critical analysis.</p>
+      <div class="tags">
+        <span class="tag">Summer Program</span>
+        <span class="tag">US University</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <h3>🎓 HSYLC — Harvard Summit</h3>
+      <p>Harvard Summit for Young Leaders in China. Took courses in The Psychology of Communication and feminist literary theory. Presented a final paper analyzing Foucault's panopticon through a feminist lens.</p>
+      <div class="tags">
+        <span class="tag">Leadership</span>
+        <span class="tag">Psychology</span>
+        <span class="tag">Gender Studies</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <h3>🗳️ Student Council</h3>
+      <p>Active member of the school student council. Co-organized the Harvest Festival and Talent Show, managed event logistics and school-wide initiatives.</p>
+      <div class="tags">
+        <span class="tag">Leadership</span>
+        <span class="tag">Event Planning</span>
+      </div>
     </div>
   </div>
 </section>
@@ -324,8 +375,16 @@
   <h2 class="section-title"><span class="icon">📝</span> Blog &amp; Writing</h2>
   <p class="section-desc">Thoughts, notes, and things I'm working on</p>
   <div class="blog-list">
-    <div class="blog-post empty">
-      🖊️ Your first post will appear here — could be a reflection, a project diary, or something you just want to share.
+    <div class="blog-post">
+      <span class="date">HSYLC · August 2024</span>
+      <h3>女性主义视角下的福柯圆形监狱</h3>
+      <p>A feminist reading of Foucault's Panopticon — exploring how social norms and invisible surveillance discipline women in modern society.</p>
+      <div class="content">
+        <p>我想从生活中的女性主义来分析福柯的圆形监狱，也就是全景敞视主义。正如刚刚提到的，我们所有人处在现代社会中本身已经是一种全景敞视和圆形监狱，每个人都畏惧那个无形的"狱警"，也就是社会中有形的人（长辈，老师，领导等）以及无形的禁锢（社会习俗，法律等）所规训。</p>
+        <p>但是，女性往往在社会中会更多被全景敞视所裹挟。首先是社会传统和习俗对女性的禁锢。拿中国来举例子，传统中国观念往往是"女主内，男主外"，虽然可能在原始社会这种分工有利于生产力的最大化，可是在如今自由开放的社会气氛下，这样的分工职责是没有必要的。尽管如此，我们的长辈也可能有"女孩子不要那么要强""早点结婚"这样的话语来劝诫我们。</p>
+        <p>虽然女性主义思想和女权运动在中国已经有了一定程度的影响力，女人们还是不可避免的被社会规则和传统习俗所裹挟。这种无形的"监禁"让不少的女性每天都要承受相比男性更尖锐的"那双眼睛"。</p>
+        <p>我们能做的是意识到自己处于被"监视"的状态，勇敢面对且积极寻找逃脱圆形监狱的方法。比如，当有人口头训诫女生说"你不应该这么强势"诸如此类的话语，我们要学会反抗；在面对无形的社会规则的监视时，我们能做的就是推动女性主义与性别平等运动的发展，为性别弱势群体争取更多权益。</p>
+      </div>
     </div>
   </div>
 </section>
